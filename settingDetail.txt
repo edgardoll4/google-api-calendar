@@ -1,0 +1,18 @@
+{
+  "kind": "calendar#settings",
+  "etag": etag,
+  "nextPageToken": string,
+  "nextSyncToken": string,
+  "items": [
+    settings Resource
+  ]
+}
+
+Settings Resource
+
+{
+  "kind": "calendar#setting",
+  "etag": etag,
+  "id": string,
+  "value": string
+}
