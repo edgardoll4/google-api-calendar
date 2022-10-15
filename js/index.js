@@ -11,8 +11,8 @@
 // const CLIENT_ID = '230506550343-2etbcce4dketmg53abs27mf7b3mdkvtu.apps.googleusercontent.com';
 
 // OJO keoCedenciales
-const API_KEY = 'AIzaSyAX5p6mGETujZKbq1RLYa9d-vk3CF-b0xA';
-const CLIENT_ID = '776834705465-vfaucfh47nisogi3t60erhj0tl6u8hol.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyCIuWOfeqXGPTobKv_T3-zL1BUdEV83zIA';
+const CLIENT_ID = '557628586214-e18d5di67f9hhd6b838e79ebi42pej5k.apps.googleusercontent.com';
 
 
 // Discovery doc URL for APIs used by the quickstart
@@ -24,8 +24,11 @@ const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/
 const SCOPES = 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events';
 
 // let CALENDAR_ID;
-// const HOY = new Date();
+// const date = new Date();
+// const datetime = new DateTime();
 
+// console.log("Date:", date);
+// console.log("DateTime:", datetime);
 
 
 let tokenClient;
@@ -186,6 +189,7 @@ async function  executeListCalendar() {
         //console.log("Response Result", response.result);
         //console.log("Response Body", response.body);
         //console.log("Response", response);
+        
         const responseJson = JSON.parse(response.body);
         //console.log("Response", responseJson);
                 const calendars = responseJson.items;
@@ -270,24 +274,42 @@ async function executeListEvents() { // busca todos los eventos en el calendario
 
 
 
-// #################################### Insert Event of Calendar ################################################
+
+// #################################### Function for add time in hour ############################################
+
+function addHoursToDate(objDate, intHours) {
+    var numberOfMlSeconds = objDate.getTime();
+    var addMlSeconds = (intHours * 60) * 60000;
+    var newDateObj = new Date(numberOfMlSeconds + addMlSeconds);
+ 
+    return newDateObj.toISOString();
+}
+// ###############################################################################################################
+
+// ##################################### Insert Event of Calendar ################################################
 
 // Make sure the client is loaded and sign-in is complete before calling this method.
 async function executeInsertEvent() {
     // let control = document.getElementById('calendarIdInsertEvent').value;
     // console.log(control)
+    const date = new Date();
+    console.log("Date:", );
+
+
+
     CALENDAR_ID = document.getElementById('calendarID').value;
+
     return gapi.client.calendar.events.insert( // json que se enviara a la api de google           
     {
         'calendarId': CALENDAR_ID,
         'resource': {
             'end': {
-            'dateTime': '2022-10-14T23:00:00Z',
-            'timeZone': 'America/Caracas'
+            'dateTime': addHoursToDate(date, 0.5),//date.toISOString(),
+            'timeZone': 'UTC'
             },
             'start': {
-                'dateTime': '2022-10-14T20:00:00Z',
-                'timeZone': 'America/Caracas'
+                'dateTime': date.toISOString(),
+                'timeZone': 'UTC'
             },
             'attendees': [
                 {
