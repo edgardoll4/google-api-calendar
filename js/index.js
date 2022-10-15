@@ -275,6 +275,7 @@ async function executeListEvents() { // busca todos los eventos en el calendario
 
 
 
+
 // #################################### Function for add time in hour ############################################
 
 function addHoursToDate(objDate, intHours) {
