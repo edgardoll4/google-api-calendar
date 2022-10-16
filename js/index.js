@@ -281,7 +281,8 @@ async function executeListEvents() { // busca todos los eventos en el calendario
 // #################################### Function for add time in hour ############################################
 
 function addHoursToDate(objDate, intHours) {
-    var numberOfMlSeconds = objDate.getTime();
+    console.log(objDate)
+    var numberOfMlSeconds = Date.parse(objDate);//.getTime();
     var addMlSeconds = (intHours * 60) * 60000;
     var newDateObj = new Date(numberOfMlSeconds + addMlSeconds);
  
@@ -295,10 +296,17 @@ function addHoursToDate(objDate, intHours) {
 async function executeInsertEvent() {
     // let control = document.getElementById('calendarIdInsertEvent').value;
     // console.log(control)
-    const date = new Date();
-    console.log("Date:", );
+    // const date = Date(document.getElementById('startEvent').value);
+    // console.log("Date:", date );
 
+    startEvent = document.getElementById('startEvent').value;
+    // endEvent = document.getElementById('endEvent').value;
+    durationEvent = document.getElementById('durationEvent').value;
 
+    // console.log("Start:", startEvent );
+    // console.log("End:", addHoursToDate(startEvent,1) );
+
+    
 
     CALENDAR_ID = document.getElementById('calendarID').value;
 
@@ -307,14 +315,14 @@ async function executeInsertEvent() {
         'calendarId': CALENDAR_ID,
         'resource': {
             'end': {
-            'dateTime': addHoursToDate(date, 0.5),//date.toISOString(),
-            'timeZone': 'UTC'
-            },
-            'start': {
-                'dateTime': date.toISOString(),
+                'dateTime': addHoursToDate( startEvent,durationEvent), //addHoursToDate('2022-10-16T09:00:00.000Z', 0.5),//date.toISOString(),
                 'timeZone': 'UTC'
             },
-            'attendees': [
+            'start': {
+                'dateTime': addHoursToDate(startEvent,0),//date.toISOString(),
+                'timeZone': 'UTC'
+            },
+            'attendees': [ // Invitados al evento
                 {
                     'email': 'Jose2889@gmail.com'
                 },
@@ -324,16 +332,38 @@ async function executeInsertEvent() {
                     'displayName': 'edgardo gmail'
                 },
                 {
-                    "email": "keoplanner@gmail.com"
+                    'email': 'keotecno@gmail.com'
                 }
             ],
-        'eventType': 'default',
-        'summary': 'TEST DOCUMENTATION GOOGLE API CODE JACASCRIPT',
-        'description': 'Prueba desde el codigo javascript documentation localhost',
-        'guestsCanInviteOthers': false,
-        'guestsCanSeeOtherGuests': false,
-        'location': 'Caracas Venezuela',
-        'status': 'confirmed'
+            'reminders': { // recordatorios
+               'useDefault': false, // indica si aplica los recodatorios por defecto de google
+               'overrides': [
+                    {
+                    'method': 'popup', // Metodo de recordatorio por "email" o por "popup"
+                    'minutes': 1440 // El tiempo se coloca en minutos. ej: 1440 es 24 hora
+                    },
+                    {
+                    'method': 'popup',
+                    'minutes': 60
+                    }
+                ]
+            },
+            'eventType': 'default',
+            'summary': 'TEST DOCUMENTATION GOOGLE API CODE JACASCRIPT',
+            'description': 'Prueba desde el codigo javascript documentation localhost',
+            'guestsCanInviteOthers': false, // Si un invitado puede invitar a otros al evento
+            'guestsCanSeeOtherGuests': false, //Si los invitados ven a los otros invitados al evneto
+            'location': 'Caracas Venezuela',
+            "sendNotifications": false,
+            'status': 'confirmed',
+            'creator': {
+                'email': 'jose2889@gmail',
+                'displayName': "Creador Principal"
+            }//,
+            // 'organizer': {
+            //     'email': "Edgardoll4@gmail.com",
+            //     'displayName': 'Organizador Principal'
+            // }
         }
     })
     .then(async function (response) {
