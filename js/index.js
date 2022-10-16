@@ -248,7 +248,7 @@ async function executeListEvents() { // busca todos los eventos en el calendario
             "alwaysIncludeEmail": true,
             "showHiddenInvitations": true,
             "prettyPrint": true,
-            "alt": "json"                    
+            "alt": "json"              
         };
         response = await gapi.client.calendar.events.list(request);
         
@@ -309,6 +309,11 @@ async function executeInsertEvent() {
     
 
     CALENDAR_ID = document.getElementById('calendarID').value;
+    summaryEvent = document.getElementById('summaryEvent').value;
+    descriptionEvent = document.getElementById('descriptionEvent').value;
+    emailEventInvitado = document.getElementById('emailEventInvitado').value;
+    locationEvent = document.getElementById('locationEvent').value;
+
 
     return gapi.client.calendar.events.insert( // json que se enviara a la api de google           
     {
@@ -324,16 +329,16 @@ async function executeInsertEvent() {
             },
             'attendees': [ // Invitados al evento
                 {
-                    'email': 'Jose2889@gmail.com'
+                    'email': emailEventInvitado,//document.getElementById('emailEventInvitado')
                 },
-                {
-                    'email': 'edgardoll4@gmail.com',
-                    'comment': 'Gmail comment',
-                    'displayName': 'edgardo gmail'
-                },
-                {
-                    'email': 'keotecno@gmail.com'
-                }
+                // {
+                //     'email': 'edgardoll4@gmail.com',
+                //     'comment': 'Gmail comment',
+                //     'displayName': 'edgardo gmail'
+                // },
+                // {
+                //     'email': 'keotecno@gmail.com'
+                // }
             ],
             'reminders': { // recordatorios
                'useDefault': false, // indica si aplica los recodatorios por defecto de google
@@ -349,21 +354,23 @@ async function executeInsertEvent() {
                 ]
             },
             'eventType': 'default',
-            'summary': 'TEST DOCUMENTATION GOOGLE API CODE JACASCRIPT',
-            'description': 'Prueba desde el codigo javascript documentation localhost',
+            'summary': summaryEvent,//document.getElementById('summaryEvent'),
+            'description': descriptionEvent,//document.getElementById('descriptionEvent'),
             'guestsCanInviteOthers': false, // Si un invitado puede invitar a otros al evento
             'guestsCanSeeOtherGuests': false, //Si los invitados ven a los otros invitados al evneto
-            'location': 'Caracas Venezuela',
+            'location': locationEvent,//document.getElementById('locationEvent'),
             "sendNotifications": false,
             'status': 'confirmed',
-            'creator': {
-                'email': 'jose2889@gmail',
-                'displayName': "Creador Principal"
-            }//,
+            // 'creator': {
+            //     'email': 'jose2889@gmail',
+            //     'displayName': "Creador Principal"
+            // }//,
             // 'organizer': {
             //     'email': "Edgardoll4@gmail.com",
             //     'displayName': 'Organizador Principal'
             // }
+            "transparency": "opaque",
+            "visibility": "default"
         }
     })
     .then(async function (response) {
