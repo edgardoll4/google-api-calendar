@@ -11,8 +11,11 @@
 // const CLIENT_ID = '230506550343-2etbcce4dketmg53abs27mf7b3mdkvtu.apps.googleusercontent.com';
 
 // OJO keoCedenciales
-const API_KEY = 'AIzaSyCIuWOfeqXGPTobKv_T3-zL1BUdEV83zIA';
-const CLIENT_ID = '557628586214-e18d5di67f9hhd6b838e79ebi42pej5k.apps.googleusercontent.com';
+// const API_KEY = 'AIzaSyCIuWOfeqXGPTobKv_T3-zL1BUdEV83zIA';
+// const CLIENT_ID = '557628586214-e18d5di67f9hhd6b838e79ebi42pej5k.apps.googleusercontent.com';
+
+const API_KEY = 'AIzaSyAMQMbpD_e_KIgZaOdWjSt34H6tlQSc0XA';
+const CLIENT_ID = '235361249422-m6ot9tcgs4844b1138uut1vps1thg6b3.apps.googleusercontent.com';
 
 
 // Discovery doc URL for APIs used by the quickstart
@@ -202,7 +205,7 @@ async function  executeListCalendar() {
                 // Flatten to string to display
                 const output = calendars.reduce(
                     (str, calendar) =>
-                        `${str}ID: ${calendar.id} Titulo=> ${calendar.summary} TimeZome=> ${calendar.timeZone} \n`,
+                        `${str}ID: ${calendar.id} Titulo=> ${calendar.summary} TimeZone=> ${calendar.timeZone}\n`,
                         'Calendars:\n');
                         //console.log(calendars);
 
@@ -264,7 +267,7 @@ async function executeListEvents() { // busca todos los eventos en el calendario
     // Flatten to string to display
     const output = events.reduce(
         (str, event) => 
-        `${str}ID: ${event.id}  ${event.summary} (${event.start.dateTime || event.start.date}) \n`,
+        `${str}ID: ${event.id} Summary=> ${event.summary} Start=> (${event.start.dateTime || event.start.date})  End=> (${event.end.dateTime || event.end.date})  Location=> ${event.location} \n`,
         'Events:\n');
         console.log(events);
         document.getElementById('contentEvents').innerText = output;
@@ -299,7 +302,7 @@ async function executeInsertEvent() {
 
 
     CALENDAR_ID = document.getElementById('calendarID').value;
-
+    
     return gapi.client.calendar.events.insert( // json que se enviara a la api de google           
     {
         'calendarId': CALENDAR_ID,
