@@ -324,7 +324,7 @@ async function executeInsertEvent() {
                     'displayName': 'edgardo gmail'
                 },
                 {
-                    "email": "testgrouphlb@gmail.com"
+                    "email": "keoplanner@gmail.com"
                 }
             ],
         'eventType': 'default',
