@@ -314,6 +314,7 @@ async function executeInsertEvent() {
     emailEventInvitado = document.getElementById('emailEventInvitado').value;
     locationEvent = document.getElementById('locationEvent').value;
 
+    console.log(locationEvent,' ',emailEventInvitado,' ', descriptionEvent,' ', summaryEvent)
 
     return gapi.client.calendar.events.insert( // json que se enviara a la api de google           
     {
@@ -330,6 +331,9 @@ async function executeInsertEvent() {
             'attendees': [ // Invitados al evento
                 {
                     'email': emailEventInvitado,//document.getElementById('emailEventInvitado')
+                    'comment': emailEventInvitado,
+                    'displayName': emailEventInvitado,
+                    "responseStatus": "accepted"
                 },
                 // {
                 //     'email': 'edgardoll4@gmail.com',
@@ -361,16 +365,20 @@ async function executeInsertEvent() {
             'location': locationEvent,//document.getElementById('locationEvent'),
             "sendNotifications": false,
             'status': 'confirmed',
-            // 'creator': {
-            //     'email': 'jose2889@gmail',
-            //     'displayName': "Creador Principal"
-            // }//,
-            // 'organizer': {
-            //     'email': "Edgardoll4@gmail.com",
-            //     'displayName': 'Organizador Principal'
-            // }
+            'creator': {
+                'email': 'jose2889@gmail',
+                'displayName': "Creador Principal"
+            },
+            'organizer': {
+                'email': "Edgardoll4@gmail.com",
+                'displayName': 'Organizador Principal'
+            },
             "transparency": "opaque",
-            "visibility": "default"
+            "visibility": "default",
+            // "originalStartTime": {
+            //     "timeZone": "UTC",
+            //     "dateTime": ""
+            // }
         }
     })
     .then(async function (response) {
