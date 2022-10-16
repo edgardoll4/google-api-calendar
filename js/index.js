@@ -7,15 +7,14 @@
 // ################################# COSNTANTES Y VARIALES ##########################################
 // TODO(developer): Set to client ID and API key from the Developer Console
 // // OJO personal credenciales
-// const API_KEY = 'AIzaSyA2r4OT8tGX9FqurHLxIw9mMf4ZMMeHn1Y';
-// const CLIENT_ID = '230506550343-2etbcce4dketmg53abs27mf7b3mdkvtu.apps.googleusercontent.com';
+
 
 // OJO keoCedenciales
 // const API_KEY = 'AIzaSyCIuWOfeqXGPTobKv_T3-zL1BUdEV83zIA';
 // const CLIENT_ID = '557628586214-e18d5di67f9hhd6b838e79ebi42pej5k.apps.googleusercontent.com';
 
-const API_KEY = 'AIzaSyAMQMbpD_e_KIgZaOdWjSt34H6tlQSc0XA';
-const CLIENT_ID = '235361249422-m6ot9tcgs4844b1138uut1vps1thg6b3.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyDUg_pyhDBeI7P2__ZIf7hu7iDo97ccnE8';
+const CLIENT_ID = '676872693291-98scod96ovb7pp1ksb5siqhis0s9di1k.apps.googleusercontent.com';
 
 
 // Discovery doc URL for APIs used by the quickstart
@@ -302,7 +301,7 @@ async function executeInsertEvent() {
 
 
     CALENDAR_ID = document.getElementById('calendarID').value;
-    
+
     return gapi.client.calendar.events.insert( // json que se enviara a la api de google           
     {
         'calendarId': CALENDAR_ID,
@@ -325,7 +324,7 @@ async function executeInsertEvent() {
                     'displayName': 'edgardo gmail'
                 },
                 {
-                    "email": "keopllaner@gmail.com"
+                    "email": "testgrouphlb@gmail.com"
                 }
             ],
         'eventType': 'default',
