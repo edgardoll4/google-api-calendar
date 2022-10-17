@@ -16,13 +16,13 @@
   
     <div class="btn-group" role="group" aria-label="Basic example">
     <!--Add buttons to initiate auth sequence and sign out-->
-      <button class="btn btn-outline-primary" id="authorize_button" onclick="handleAuthClick()">Authorize</button>
+      <button class="btn btn-outline-primary p-2 mb-2 opacity-75" id="authorize_button" onclick="handleAuthClick()">Authorize</button>
     
-      <button class="btn btn-outline-primary" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+      <button class="btn btn-outline-primary p-2 mb-2 opacity-75" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
     </div>
     <!-- ################################## Contenedor para lista de calendarios #################### -->
 
-    <div class="container">
+    <div class="container form-control border-success p-2 mb-2 opacity-75">
       <h1 class="text text-success text-center ">
         Calendar
       </h1>
@@ -60,7 +60,7 @@
     <!-- ############################## Contenedor para lista de eventos del calendarios ############ -->
     <!-- <pre id="contentEvents" style="white-space: pre-wrap;"></pre> -->
 
-    <div class="container">
+    <div class="container border form-control border-primary p-2 mb-2 opacity-75">
       <h1 class="text text-primary text-center ">
         Evento
       </h1>
@@ -110,24 +110,28 @@
     <script src="./js/index.js"></script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-    <div id="contact_form">
+    <div id="contact_form p-2 mb-2">
       <!-- <form name="contact" action=""> -->
         <!-- <fieldset> -->
 
-          <button type="button" class="btn btn-outline-primary" onclick="executeListCalendar()">Ver Lista de Calendarios</button>
+          <button type="button" class="btn btn-outline-primary position-relative" onclick="executeListCalendar()">Ver Lista de Calendarios</button>
+          
+          <div class="input-group p-2 mb-2">
 
           <!-- <label for="btnEventList" class="form-label">Id del Calendario: </label> -->
-          <input placeholder="ID Calendar" type="text" id="calendarID">
-          <button id="btnEventList" class="btn btn-outline-primary" onclick="executeListEvents()">Ver Lista de Evento del Calendario</button>
+          <span class="input-group-text">ID Calendar </span>
+          <input placeholder="ID Calendar" type="text" id="calendarID" class="position-relative form-control">
           <!-- <label>Id del Calendario: </label><input type="text" id="calendarID">
-          <button onclick="executeListEvents()">Ver Lista de Evento del Calendario</button><br> -->
-
-          <form class="row g-3 p-3 m-3 mx-auto">
+            <button onclick="executeListEvents()">Ver Lista de Evento del Calendario</button><br> -->
+          </div>
+          <button id="btnEventList" class="btn btn-outline-primary position-relative" onclick="executeListEvents()">Ver Lista de Evento del Calendario</button>
+          
+          <form class="row p-3 m-3 mx-auto border form-control border-primary ">
             <!-- <div class="col-12">
               <label for="summaryEvent" id="summaryEvent_label" class="form-label">Titulo: </label>
               <input placeholder="Titulo" type="text" name="summaryEvent" id="summaryEvent" size="30" value="" class="text-input" />
             </div> -->
-            <div class="input-group">
+            <div class="input-group p-2 mb-2">
               <span class="input-group-text" id="basic-addon3">Titulo </span>
               <input type="text" class="form-control" id="summaryEvent" aria-describedby="basic-addon3">
             </div>
@@ -135,7 +139,7 @@
               <label for="descriptionEvent" id="descriptionEvent_label" class="form-label">Descripción: </label>
               <input placeholder="Description" type="text" name="descriptionEvent" id="descriptionEvent" size="30" value="" class="text-input" />
             </div> -->
-            <div class="input-group">
+            <div class="input-group p-2 mb-2">
               <span class="input-group-text">Description </span>
               <textarea class="form-control" aria-label="Description" id="descriptionEvent"></textarea>
             </div>
@@ -147,13 +151,13 @@
               <label for="locationEvent" id="locationEvent_label class="form-label"">Locación: </label>
               <input placeholder="Location" type="text" name="locationEvent" id="locationEvent" size="30" value="" class="text-input" />
             </div> -->
-            <div class="input-group mb-3">
+            <div class="input-group p-2 mb-3">
               <span class="input-group-text">@Email </span>
               <input type="text" class="form-control" placeholder="Email" aria-label="Username" id="emailEventInvitado">
               <span class="input-group-text">Locación </span>
               <input type="text" class="form-control" placeholder="Location" aria-label="Server" id="locationEvent">
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group p-2 mb-3">
               <!-- <label class="form-label" for="startEvent">Inicio: </label> -->
               <span class="input-group-text">Start </span>
               <input id="startEvent" type="datetime-local" class="form-control"/> 
@@ -170,13 +174,13 @@
             </div>
           </form>
 
-          <form class="row g-3">
-            <div class="d-grid gap-2 col-6 mx-auto">
+    
+            <div class="row border form-control border-danger p-2 mb-2 mx-auto">
               <!-- <label for="btnEventDelete" class="form-label">Id del Evento a eliminar: </label> -->
-              <input placeholder="Id Event" type="text" id="eventID">
-              <button  type="button" id="btnEventDelete" class="btn btn-danger" onclick="executeDeleteEvent()">Eliminar Evento</button>
+              <input  class="col-12  position-relative mb-2" placeholder="Id Event" type="text" id="eventID">
+              <button type="button" id="btnEventDelete" class="btn btn-danger col-12 " onclick="executeDeleteEvent()">Eliminar Evento</button>
             </div>
-          </form> 
+        
           <!-- <input type="submit" name="submit" class="button" id="submit_btn" value="Send" /> -->
         <!-- </fieldset> -->
       <!-- </form> -->
