@@ -193,24 +193,54 @@ async function  executeListCalendar() {
         //console.log("Response", response);
         
         const responseJson = JSON.parse(response.body);
-        //console.log("Response", responseJson);
+        console.log("Response", responseJson);
                 const calendars = responseJson.items;
                 //console.log("Calendarios Json", calendars);
                 //console.log("Items de calendarios: ",calendars.length);
                 if (!calendars || calendars.length == 0) {
-                    document.getElementById('contentCalendar').innerText = 'No Calendar found.';
+                    // document.getElementById('contentCalendar').innerText = 'No Calendar found.';
+                    document.getElementById('contentCalendars').innerText = 'No Calendar found.';
+                    
                     //return;
                 }
-                // Flatten to string to display
-                const output = calendars.reduce(
-                    (str, calendar) =>
-                        `${str}ID: ${calendar.id} Titulo=> ${calendar.summary} TimeZone=> ${calendar.timeZone}\n`,
-                        'Calendars:\n');
-                        //console.log(calendars);
 
-                        document.getElementById('contentCalendars').innerText = output;
-                    },
-                    function (err) { console.error("Execute error", err); });
+                    let res = document.getElementById('contentCalendars');
+
+                    res.innerHTML = '<script src="./js/index.js"></script>';
+
+                    for(let item of responseJson.items ){
+
+                        res.innerHTML += `
+
+                        <tr>
+                            <td>${item.id}</td>
+                            <td>${item.summary}</td>
+                            <td>${item.timeZone}</td>
+                            <td><input type="buton" class="btn btn-outline-primary position-relative" onclick="executeListEvents('${item.id}')" value= "Lista de Evento"></td>
+
+                        </tr>
+                        
+                        `;
+
+                    }
+                // Flatten to string to display
+                // const output = calendars.reduce(
+                //     (str) =>
+                //         `${str}
+                //             <tr>
+                //                 <td>${calendar.id}</td>
+                //                 <td>${calendar.summary}</td>
+                //                 <td>${calendar.timeZone}</td>
+                //             </tr>`
+                //         //     ID: ${calendar.id} Titulo=> ${calendar.summary} TimeZone=> ${calendar.timeZone}\n`,
+                //         // ,'Calendars:\n'
+                //         );
+                //         //console.log(calendars);
+
+                //         document.getElementById('contentCalendars').innerText = output;
+
+        },
+        function (err) { console.error("Execute error", err); });
                     
                 
 }
@@ -233,9 +263,11 @@ async function  executeListCalendar() {
 
 // #################################### List Event of Calendar ################################################
 
-async function executeListEvents() { // busca todos los eventos en el calendario de calendarId
+async function executeListEvents(calendarId) { // busca todos los eventos en el calendario de calendarId
     let response;
-    CALENDAR_ID = document.getElementById('calendarID').value;
+    // CALENDAR_ID = document.getElementById('calendarID').value;
+    CALENDAR_ID = calendarId;
+    // document.getElementById('calendarID').value = calendarId;
     console.log(CALENDAR_ID)
     try {
         const request = {
@@ -263,13 +295,34 @@ async function executeListEvents() { // busca todos los eventos en el calendario
         document.getElementById('contentEvents').innerText = 'No events found.';
         return;
     }
+
+        let res = document.getElementById('contentEvents');
+
+        res.innerHTML = '';
+
+        for(let event of events ){
+
+            res.innerHTML += `
+
+            <tr>
+                <td>${event.id}</td>
+                <td>${event.summary}</td>
+                <td>(${event.start.dateTime || event.start.date})</td>
+                <td>(${event.end.dateTime || event.end.date})</td>
+                <td>${event.location}</td>
+            </tr>
+            
+            `;
+
+        }
+
     // Flatten to string to display
-    const output = events.reduce(
-        (str, event) => 
-        `${str}ID: ${event.id} Summary=> ${event.summary} Start=> (${event.start.dateTime || event.start.date})  End=> (${event.end.dateTime || event.end.date})  Location=> ${event.location} \n`,
-        'Events:\n');
-        console.log(events);
-        document.getElementById('contentEvents').innerText = output;
+    // const output = events.reduce(
+    //     (str, event) => 
+    //     `${str}ID: ${event.id} Summary=> ${event.summary} Start=> (${event.start.dateTime || event.start.date})  End=> (${event.end.dateTime || event.end.date})  Location=> ${event.location} \n`,
+    //     'Events:\n');
+    //     console.log(events);
+    //     document.getElementById('contentEvents').innerText = output;
     }
     
 // ###############################################################################################################
@@ -306,9 +359,7 @@ async function executeInsertEvent() {
     // console.log("Start:", startEvent );
     // console.log("End:", addHoursToDate(startEvent,1) );
 
-    
-
-    CALENDAR_ID = document.getElementById('calendarID').value;
+    // CALENDAR_ID = document.getElementById('calendarID').value;
     summaryEvent = document.getElementById('summaryEvent').value;
     descriptionEvent = document.getElementById('descriptionEvent').value;
     emailEventInvitado = document.getElementById('emailEventInvitado').value;
@@ -384,7 +435,7 @@ async function executeInsertEvent() {
     .then(async function (response) {
         // Handle the results here (response.result has the parsed body).
             console.log("Response", JSON.parse(response.body));
-            await executeListEvents();
+            await executeListEvents(CALENDAR_ID);
         },
         function (err) { console.error("Execute error", err); });
 }
