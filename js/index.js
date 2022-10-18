@@ -206,7 +206,7 @@ async function  executeListCalendar() {
 
                     let res = document.getElementById('contentCalendars');
 
-                    res.innerHTML = '';
+                    res.innerHTML = '<script src="./js/index.js"></script>';
 
                     for(let item of responseJson.items ){
 
@@ -216,6 +216,8 @@ async function  executeListCalendar() {
                             <td>${item.id}</td>
                             <td>${item.summary}</td>
                             <td>${item.timeZone}</td>
+                            <td><input type="buton" class="btn btn-outline-primary position-relative" onclick="executeListEvents('${item.id}')" value= "Lista de Evento"></td>
+
                         </tr>
                         
                         `;
@@ -261,9 +263,11 @@ async function  executeListCalendar() {
 
 // #################################### List Event of Calendar ################################################
 
-async function executeListEvents() { // busca todos los eventos en el calendario de calendarId
+async function executeListEvents(calendarId) { // busca todos los eventos en el calendario de calendarId
     let response;
-    CALENDAR_ID = document.getElementById('calendarID').value;
+    // CALENDAR_ID = document.getElementById('calendarID').value;
+    CALENDAR_ID = calendarId;
+    // document.getElementById('calendarID').value = calendarId;
     console.log(CALENDAR_ID)
     try {
         const request = {
@@ -355,9 +359,7 @@ async function executeInsertEvent() {
     // console.log("Start:", startEvent );
     // console.log("End:", addHoursToDate(startEvent,1) );
 
-    
-
-    CALENDAR_ID = document.getElementById('calendarID').value;
+    // CALENDAR_ID = document.getElementById('calendarID').value;
     summaryEvent = document.getElementById('summaryEvent').value;
     descriptionEvent = document.getElementById('descriptionEvent').value;
     emailEventInvitado = document.getElementById('emailEventInvitado').value;
@@ -433,7 +435,7 @@ async function executeInsertEvent() {
     .then(async function (response) {
         // Handle the results here (response.result has the parsed body).
             console.log("Response", JSON.parse(response.body));
-            await executeListEvents();
+            await executeListEvents(CALENDAR_ID);
         },
         function (err) { console.error("Execute error", err); });
 }

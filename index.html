@@ -23,28 +23,36 @@
     <!-- ################################## Contenedor para lista de calendarios #################### -->
 
     <div class="container form-control border-success p-2 mb-2 opacity-75">
-      <h1 class="text text-success text-center ">
-        Calendar
-      </h1>
+      <div id="input-group contact_form p-2 m-2 ">
+        <h1 class="text text-success text-center ">
+          Calendar
+        </h1>
         <h6 class="text text-success text-center">
           List Calendar
         </h6>
+        <!-- <button type="button" class="btn btn-outline-success position-relative" onclick="executeListCalendar()">Ver Lista de Calendarios</button> -->
+      </div>
         <table class="table table-striped table-hover border-success">
           <thead>
             <tr>
                 <th data-field="id">
                   <span scope="col text-success">
-                    Employee ID
+                    ID
                   </span>
                 </th>
                 <th data-field="summary">
                   <span class="col text-success">
-                    Employee Title 
+                    Title 
                   </span>
                 </th>
                 <th data-field="timeZone">
                   <span class="col text-success">
-                    Joining Time Zone 
+                    Time Zone 
+                  </span>
+                </th>
+                <th data-field="timeZone">
+                  <span class="col text-success">
+                    Options
                   </span>
                 </th>
               </tr>
@@ -53,9 +61,25 @@
               </tbody>
             </thead>
           </table>
+
+      <div id="input-group contact_form p-2 m-2 ">
+        <button type="button" class="btn btn-outline-success position-relative" onclick="executeListCalendar()">Ver Lista de Calendarios</button>
+      </div>
+
       </div>
 
     <!-- ############################################################################################ -->
+
+    <!-- <div id="contact_form p-2 m-2 ">
+        <button type="button" class="btn btn-outline-primary position-relative" onclick="executeListCalendar()">Ver Lista de Calendarios</button>
+          
+        <div class="input-group p-2 mb-2">
+          <span class="input-group-text">ID Calendar </span>
+          <input placeholder="ID Calendar" type="text" id="calendarID" class="position-relative form-control">
+          <button id="btnEventList" class="btn btn-outline-primary position-relative" onclick="executeListEvents()">Ver Lista de Evento del Calendario</button>
+        </div>
+    </div> -->
+
 
     <!-- ############################## Contenedor para lista de eventos del calendarios ############ -->
     <!-- <pre id="contentEvents" style="white-space: pre-wrap;"></pre> -->
@@ -107,24 +131,22 @@
     <!-- ############################################################################################ -->
     
     
-    <script src="./js/index.js"></script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    
     <div id="contact_form p-2 mb-2">
       <!-- <form name="contact" action=""> -->
         <!-- <fieldset> -->
 
-          <button type="button" class="btn btn-outline-primary position-relative" onclick="executeListCalendar()">Ver Lista de Calendarios</button>
+          <!-- <button type="button" class="btn btn-outline-primary position-relative" onclick="executeListCalendar()">Ver Lista de Calendarios</button> -->
           
-          <div class="input-group p-2 mb-2">
+          <!-- <div class="input-group p-2 mb-2"> -->
 
           <!-- <label for="btnEventList" class="form-label">Id del Calendario: </label> -->
-          <span class="input-group-text">ID Calendar </span>
-          <input placeholder="ID Calendar" type="text" id="calendarID" class="position-relative form-control">
+          <!-- <span class="input-group-text">ID Calendar </span> -->
+          <!-- <input placeholder="ID Calendar" type="text" id="calendarID" class="position-relative form-control"> -->
           <!-- <label>Id del Calendario: </label><input type="text" id="calendarID">
             <button onclick="executeListEvents()">Ver Lista de Evento del Calendario</button><br> -->
-          </div>
-          <button id="btnEventList" class="btn btn-outline-primary position-relative" onclick="executeListEvents()">Ver Lista de Evento del Calendario</button>
+          <!-- </div> -->
+          <!-- <button id="btnEventList" class="btn btn-outline-primary position-relative" onclick="executeListEvents()">Ver Lista de Evento del Calendario</button> -->
           
           <form class="row p-3 m-3 mx-auto border form-control border-primary ">
             <!-- <div class="col-12">
@@ -133,7 +155,7 @@
             </div> -->
             <div class="input-group p-2 mb-2">
               <span class="input-group-text" id="basic-addon3">Titulo </span>
-              <input type="text" class="form-control" id="summaryEvent" aria-describedby="basic-addon3">
+              <input placeholder="Tittle" type="text" class="form-control" id="summaryEvent" aria-describedby="basic-addon3">
             </div>
             <!-- <div class="col-6">
               <label for="descriptionEvent" id="descriptionEvent_label" class="form-label">Descripción: </label>
@@ -141,12 +163,13 @@
             </div> -->
             <div class="input-group p-2 mb-2">
               <span class="input-group-text">Description </span>
-              <textarea class="form-control" aria-label="Description" id="descriptionEvent"></textarea>
+              <textarea placeholder="Description" class="form-control" aria-label="Description" id="descriptionEvent"></textarea>
             </div>
             <!-- <div class="col-6">  
               <label for="emailEventInvitado" id="emailEventInvitado_label" class="form-label">Email: </label>
               <input placeholder="Email" type="text" name="emailEventInvitado" id="emailEventInvitado" size="30" value="" class="text-input" />
             </div> -->
+
             <!-- <div class="col-6">
               <label for="locationEvent" id="locationEvent_label class="form-label"">Locación: </label>
               <input placeholder="Location" type="text" name="locationEvent" id="locationEvent" size="30" value="" class="text-input" />
@@ -157,6 +180,7 @@
               <span class="input-group-text">Locación </span>
               <input type="text" class="form-control" placeholder="Location" aria-label="Server" id="locationEvent">
             </div>
+            
             <div class="input-group p-2 mb-3">
               <!-- <label class="form-label" for="startEvent">Inicio: </label> -->
               <span class="input-group-text">Start </span>
@@ -175,11 +199,19 @@
           </form>
 
     
-            <div class="row border form-control border-danger p-2 mb-2 mx-auto">
-              <!-- <label for="btnEventDelete" class="form-label">Id del Evento a eliminar: </label> -->
+            <!-- <div class="row border form-control border-danger p-2 mb-2 mx-auto">
               <input  class="col-12  position-relative mb-2" placeholder="Id Event" type="text" id="eventID">
               <button type="button" id="btnEventDelete" class="btn btn-danger col-12 " onclick="executeDeleteEvent()">Eliminar Evento</button>
-            </div>
+            </div> -->
+
+          <div class="input-group p-2 mb-3 border border-danger form-control">
+            <!-- <label for="btnEventList" class="form-label">Id del Calendario: </label> -->
+            <span class="input-group-text">ID Event </span>
+            <input placeholder="ID Event" type="text" id="eventID" class="position-relative form-control">
+            <!-- <label>Id del Calendario: </label><input type="text" id="calendarID">
+              <button onclick="executeListEvents()">Ver Lista de Evento del Calendario</button><br> -->
+            <button type="button" id="btnEventDelete" class="btn btn-outline-danger position-relative" onclick="executeDeleteEvent()">Eliminar Evento</button>
+          </div>
         
           <!-- <input type="submit" name="submit" class="button" id="submit_btn" value="Send" /> -->
         <!-- </fieldset> -->
@@ -188,7 +220,9 @@
     
     <!-- <button onclick="authenticate().then(loadClient)">authorize and load</button> -->
     <!-- <label>Id del Calendario: </label><input type="text" id="calendarIdInsertEvent"> -->
-
+    <script src="./js/index.js"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
