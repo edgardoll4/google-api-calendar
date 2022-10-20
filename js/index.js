@@ -32,7 +32,7 @@ const SCOPES = 'https://www.googleapis.com/auth/calendar https://www.googleapis.
 // console.log("Date:", date);
 // console.log("DateTime:", datetime);
 
-
+let CALENDAR_ID;
 let tokenClient;
 let gapiInited = true;
 let gisInited = true;
@@ -223,21 +223,6 @@ async function  executeListCalendar() {
                         `;
 
                     }
-                // Flatten to string to display
-                // const output = calendars.reduce(
-                //     (str) =>
-                //         `${str}
-                //             <tr>
-                //                 <td>${calendar.id}</td>
-                //                 <td>${calendar.summary}</td>
-                //                 <td>${calendar.timeZone}</td>
-                //             </tr>`
-                //         //     ID: ${calendar.id} Titulo=> ${calendar.summary} TimeZone=> ${calendar.timeZone}\n`,
-                //         // ,'Calendars:\n'
-                //         );
-                //         //console.log(calendars);
-
-                //         document.getElementById('contentCalendars').innerText = output;
 
         },
         function (err) { console.error("Execute error", err); });
@@ -348,30 +333,32 @@ function addHoursToDate(objDate, intHours) {
 
 // Make sure the client is loaded and sign-in is complete before calling this method.
 async function executeInsertEvent() {
-    // let control = document.getElementById('calendarIdInsertEvent').value;
-    // console.log(control)
-    // const date = Date(document.getElementById('startEvent').value);
-    // console.log("Date:", date );
-
     startEvent = document.getElementById('startEvent').value;
-    // endEvent = document.getElementById('endEvent').value;
     durationEvent = document.getElementById('durationEvent').value;
-
-    // console.log("Start:", startEvent );
-    // console.log("End:", addHoursToDate(startEvent,1) );
-
-    // CALENDAR_ID = document.getElementById('calendarID').value;
     summaryEvent = document.getElementById('summaryEvent').value;
     descriptionEvent = document.getElementById('descriptionEvent').value;
     emailEventInvitado = document.getElementById('emailEventInvitado').value;
     locationEvent = document.getElementById('locationEvent').value;
     requestId = 'confe-meet-'+ new Date().toISOString();
-    console.log(requestId);
-    console.log(locationEvent,' ',emailEventInvitado,' ', descriptionEvent,' ', summaryEvent)
+    // console.log(requestId);
+    // console.log(locationEvent,' ',emailEventInvitado,' ', descriptionEvent,' ', summaryEvent)
+    console.log(CALENDAR_ID);
+
+    if (!CALENDAR_ID || CALENDAR_ID == '' || undefined)
+        CALENDAR_ID = 'primary';
+    // const arg = {
+    //     'sendUpdates': 'all',
+    //     'conferenceDataVersion':1
+    // }
+
+    // const IdCalendar ={
+    //     'calendarId': CALENDAR_ID,
+    // };
 
     request = {
         'calendarId': CALENDAR_ID,
-        'resource': {
+        'resource': 
+        {
             'end': {
                 'dateTime': addHoursToDate( startEvent,durationEvent), //addHoursToDate('2022-10-16T09:00:00.000Z', 0.5),//date.toISOString(),
                 'timeZone': 'UTC'
@@ -387,14 +374,6 @@ async function executeInsertEvent() {
                     'displayName': emailEventInvitado,
                     'responseStatus': 'accepted'
                 },
-                // {
-                //     'email': 'edgardoll4@gmail.com',
-                //     'comment': 'Gmail comment',
-                //     'displayName': 'edgardo gmail'
-                // },
-                // {
-                //     'email': 'keotecno@gmail.com'
-                // }
             ],
             'reminders': { // recordatorios
                'useDefault': false, // indica si aplica los recodatorios por defecto de google
@@ -427,7 +406,7 @@ async function executeInsertEvent() {
             'transparency': 'opaque',
             'visibility': 'default',
             'conferenceData': { // Solocita la creacion de conferencia
-                // 'name':'Evento en Google Meet',
+                'name':'Evento en Google Meet',
                 'createRequest': {
                     'requestId': requestId,
                     // 'conferenceSolutionKey': {
@@ -443,9 +422,6 @@ async function executeInsertEvent() {
         'conferenceDataVersion':1 // Permite que las solicitud de conferencias para el evento
     };
 
-    // let arg={
-    //     'conferenceDataVersion':1
-    // }
 
     return  await gapi.client.calendar.events.insert( request )// json que se enviara a la api de google           
     
