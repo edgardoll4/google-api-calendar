@@ -193,7 +193,7 @@ async function  executeListCalendar() {
         //console.log("Response", response);
         
         const responseJson = JSON.parse(response.body);
-        console.log("Response", responseJson);
+        console.log("Response List Calendar", responseJson);
                 const calendars = responseJson.items;
                 //console.log("Calendarios Json", calendars);
                 //console.log("Items de calendarios: ",calendars.length);
@@ -268,7 +268,7 @@ async function executeListEvents(calendarId) { // busca todos los eventos en el 
     // CALENDAR_ID = document.getElementById('calendarID').value;
     CALENDAR_ID = calendarId;
     // document.getElementById('calendarID').value = calendarId;
-    console.log(CALENDAR_ID)
+    console.log('CalendarioId: ',CALENDAR_ID)
     try {
         const request = {
             'calendarId': CALENDAR_ID,
@@ -291,6 +291,7 @@ async function executeListEvents(calendarId) { // busca todos los eventos en el 
     }
     
     const events = response.result.items;
+    console.log('Eevents: ', events);
     if (!events || events.length == 0 || undefined) {
         document.getElementById('contentEvents').innerText = 'No events found.';
         return;
@@ -364,11 +365,11 @@ async function executeInsertEvent() {
     descriptionEvent = document.getElementById('descriptionEvent').value;
     emailEventInvitado = document.getElementById('emailEventInvitado').value;
     locationEvent = document.getElementById('locationEvent').value;
-
+    requestId = 'confe-meet-'+ new Date().toISOString();
+    console.log(requestId);
     console.log(locationEvent,' ',emailEventInvitado,' ', descriptionEvent,' ', summaryEvent)
 
-    return gapi.client.calendar.events.insert( // json que se enviara a la api de google           
-    {
+    request = {
         'calendarId': CALENDAR_ID,
         'resource': {
             'end': {
@@ -384,7 +385,7 @@ async function executeInsertEvent() {
                     'email': emailEventInvitado,//document.getElementById('emailEventInvitado')
                     'comment': emailEventInvitado,
                     'displayName': emailEventInvitado,
-                    "responseStatus": "accepted"
+                    'responseStatus': 'accepted'
                 },
                 // {
                 //     'email': 'edgardoll4@gmail.com',
@@ -414,24 +415,40 @@ async function executeInsertEvent() {
             'guestsCanInviteOthers': false, // Si un invitado puede invitar a otros al evento
             'guestsCanSeeOtherGuests': false, //Si los invitados ven a los otros invitados al evneto
             'location': locationEvent,//document.getElementById('locationEvent'),
-            "sendNotifications": false,
             'status': 'confirmed',
-            'creator': {
-                'email': 'jose2889@gmail',
-                'displayName': "Creador Principal"
-            },
+            // 'creator': {
+            //     'email': 'jose2889@gmail',
+            //     'displayName': "Creador Principal"
+            // },
             'organizer': {
-                'email': "Edgardoll4@gmail.com",
+                'email': 'edgardoll4@gmail.com',
                 'displayName': 'Organizador Principal'
             },
-            "transparency": "opaque",
-            "visibility": "default",
-            // "originalStartTime": {
-            //     "timeZone": "UTC",
-            //     "dateTime": ""
-            // }
-        }
-    })
+            'transparency': 'opaque',
+            'visibility': 'default',
+            'conferenceData': { // Solocita la creacion de conferencia
+                // 'name':'Evento en Google Meet',
+                'createRequest': {
+                    'requestId': requestId,
+                    // 'conferenceSolutionKey': {
+                    //     'type': 'hangoutsMeet'
+                    // }
+                },
+
+            },
+            
+            
+        },
+        'sendUpdates': 'all',
+        'conferenceDataVersion':1 // Permite que las solicitud de conferencias para el evento
+    };
+
+    // let arg={
+    //     'conferenceDataVersion':1
+    // }
+
+    return  await gapi.client.calendar.events.insert( request )// json que se enviara a la api de google           
+    
     .then(async function (response) {
         // Handle the results here (response.result has the parsed body).
             console.log("Response", JSON.parse(response.body));
