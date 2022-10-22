@@ -48,15 +48,6 @@ let gisInited = true;
 
 
 
-
-
-
-
-
-
-
-
-
 // ############################################ AUTENTIFICACIÓN #################################################
 document.getElementById('authorize_button').style.visibility = 'hidden';
 document.getElementById('signout_button').style.visibility = 'hidden';
@@ -168,11 +159,6 @@ function handleSignoutClick() {
 
 
 
-
-
-
-
-
 // ################################################# List Claendar ################################################
 
 // Make sure the client is loaded and sign-in is complete before calling this method.
@@ -237,13 +223,6 @@ async function  executeListCalendar() {
 
 
 
-
-
-
-
-
-
-
         
 
 // #################################### List Event of Calendar ################################################
@@ -295,7 +274,7 @@ async function executeListEvents(calendarId) { // busca todos los eventos en el 
             res.innerHTML += `
 
             <tr>
-                <td>${event.id}</td>
+                <td><button type="button" class="btn btn-outline-danger position-relative" onclick="executeDeleteEvent('${event.id}')">Eliminar Evento</button></td>
                 <td>${event.summary}</td>
                 <td>(${event.start.dateTime || event.start.date})</td>
                 <td>(${event.end.dateTime || event.end.date})</td>
@@ -324,11 +303,12 @@ async function executeListEvents(calendarId) { // busca todos los eventos en el 
 
 // #################################### Function for add time in hour ############################################
 
-function addHoursToDate(objDate, intHours) {
-    console.log(objDate)
+function addHoursToDate(status,objDate, intHours) {
     var numberOfMlSeconds = Date.parse(objDate);//.getTime();
     var addMlSeconds = (intHours * 60) * 60000;
     var newDateObj = new Date(numberOfMlSeconds + addMlSeconds);
+    // console.log(status,parseFloat(intHours))
+    console.log(status,newDateObj.toISOString())
  
     return newDateObj.toISOString();
 }
@@ -345,38 +325,31 @@ async function executeInsertEvent() {
     emailEventInvitado = document.getElementById('emailEventInvitado').value;
     locationEvent = document.getElementById('locationEvent').value;
     requestId = 'confe-meet-'+ new Date().toISOString();
-    // console.log(requestId);
-    // console.log(locationEvent,' ',emailEventInvitado,' ', descriptionEvent,' ', summaryEvent)
-    console.log(CALENDAR_ID);
+
+    console.log(addHoursToDate( 'End',startEvent, durationEvent));
 
     if (!CALENDAR_ID || CALENDAR_ID == '' || undefined)
         CALENDAR_ID = 'primary';
-    // const arg = {
-    //     'sendUpdates': 'all',
-    //     'conferenceDataVersion':1
-    // }
-
-    // const IdCalendar ={
-    //     'calendarId': CALENDAR_ID,
-    // };
+    
+    console.log('Calendario: ', CALENDAR_ID);
 
     request = {
         'calendarId': CALENDAR_ID,
         'resource': 
         {
-            'end': {
-                'dateTime': addHoursToDate( startEvent,durationEvent), //addHoursToDate('2022-10-16T09:00:00.000Z', 0.5),//date.toISOString(),
+            'start': {
+                'dateTime': addHoursToDate('Start',startEvent,0), 
                 'timeZone': 'UTC'
             },
-            'start': {
-                'dateTime': addHoursToDate(startEvent,0),//date.toISOString(),
-                'timeZone': 'UTC'
+            'end': {
+                'dateTime': addHoursToDate('End',startEvent,durationEvent), // addHoursToDate('2022-10-16T09:00:00.000Z', 0.5)
+                'timeZone': 'UTC' // time zone del evento 
             },
             'attendees': [ // Invitados al evento
                 {
-                    'email': emailEventInvitado,//document.getElementById('emailEventInvitado')
-                    'comment': emailEventInvitado,
-                    'displayName': emailEventInvitado,
+                    'email': emailEventInvitado, // email del invitado
+                    'comment': emailEventInvitado, // comentario del invitado
+                    'displayName': emailEventInvitado, // display name del invitado
                     'responseStatus': 'accepted' // Se indica que el invitado ha aceptado la invitacion
                 },
             ],
@@ -400,35 +373,20 @@ async function executeInsertEvent() {
             'guestsCanSeeOtherGuests': false, //Si los invitados ven a los otros invitados al evneto
             'location': locationEvent,//document.getElementById('locationEvent'),
             'status': 'confirmed', // Estado del evento donde se indica que esta confirmado
-            // 'creator': {
-            //     'email': 'jose2889@gmail',
-            //     'displayName': "Creador Principal"
-            // },
-            'organizer': {
-                'email': 'edgardoll4@gmail.com',
-                'displayName': 'Organizador Principal'
-            },
-            'transparency': 'opaque', // Indica si el evento es transparente o no
-            'visibility': 'default', // Indica si el evento es publico o privado
             'conferenceData': { // Solocita la creacion de conferencia
-                'name':'Evento en Google Meet', // Nombre de la conferencia
+                //'name':'Evento en Google Meet', // Nombre de la conferencia
                 'createRequest': {
                     'requestId': btoa(requestId), // Id unico (puede ser cuanquiera) para solicitar la generación del link
-                    // 'conferenceSolutionKey': {
-                    //     'type': 'hangoutsMeet'  // EL calendario lo tiene por defecto
-                    // }
                 },
-
-            },
-            
-            
+            },   
         },
-        'sendNotifications': true,
-        'sendUpdates': 'all',
+        // 'transparency': 'opaque', // El evento bloquea el tiempo en el calendario. Si se coloca "transparent" el evento no bloquea el tiempo
+        // 'visibility': 'public', // Visibilidad del evento (public, private, confidential)
+        'sendNotifications': true, // Enviar notificaciones a los invitados
+        'sendUpdates': 'all', // Enviar actualizaciones a los invitados
         'conferenceDataVersion':1 // Permite que las solicitud de conferencias para el evento cuanto el valor es 1
     };
 
-    // console.log(btoa(requestId));
 
     return  await gapi.client.calendar.events.insert( request )// json que se enviara a la api de google           
     
@@ -451,25 +409,20 @@ async function executeInsertEvent() {
 
 
 
-
-
-
 // ######################Eliminar evento############################### 
-async function executeDeleteEvent() {
-    // CALENDAR_ID = document.getElementById('calendarID').value;
-    let control = document.getElementById('eventID').value;
-    console.log(control)
+async function executeDeleteEvent(eventId) {
+    console.log(eventId)
     return gapi.client.calendar.events.delete({
     'calendarId': CALENDAR_ID,
-    'eventId': control,
+    'eventId': eventId,
     'sendNotifications': true,
     'sendUpdates': 'none' // Values:  all none externalOnly
     })
     .then( async function(response) {
         // Handle the results here (response.result has the parsed body).
-        console.log("Response", response);
+        console.log("Response: ", response);
         //document.getElementById('eventID').value = '';
-        await executeListEvents();
+        await executeListEvents(CALENDAR_ID);
     },
     function(err) { console.error("Execute error", err); });
 }
