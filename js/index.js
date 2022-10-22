@@ -199,7 +199,7 @@ async function  executeListCalendar() {
                         res.innerHTML += `
 
                         <tr>
-                            <td>${item.id}</td>
+                            <td></td>
                             <td>${item.summary}</td>
                             <td>${item.timeZone}</td>
                             <td><input type="buton" class="btn btn-outline-primary position-relative" onclick="executeListEvents('${item.id}')" value= "Lista de Evento"></td>
@@ -279,7 +279,7 @@ async function executeListEvents(calendarId) { // busca todos los eventos en el 
                 <td>(${event.start.dateTime || event.start.date})</td>
                 <td>(${event.end.dateTime || event.end.date})</td>
                 <td>${event.location}</td>
-                <td>${hangoutLink}</td>
+                <td><a class="btn btn-outline-primary p-2 mb-2 opacity-75" href="${hangoutLink}" target="_blank">Ir al link de la conferencia</a></td>
             </tr>
             
             `;

@@ -19,12 +19,15 @@
     <div class="btn-group" role="group" aria-label="Basic example">
     <!--Add buttons to initiate auth sequence and sign out-->
       <button class="btn btn-outline-primary p-2 mb-2 opacity-75" id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-    
+      
       <button class="btn btn-outline-primary p-2 mb-2 opacity-75" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
     </div>
     <!-- ################################## Contenedor para lista de calendarios #################### -->
-
+    
     <div class="container form-control border-success p-2 mb-2 opacity-75">
+      <div id="input-group contact_form p-2 m-2 row">
+        <button type="button" class="btn btn-outline-success position-relative col-12 mx-auto" onclick="executeListCalendar()">Ver Lista de Calendarios</button>
+      </div>
       <div id="input-group contact_form p-2 m-2 ">
         <h1 class="text text-success text-center ">
           Calendar
@@ -65,9 +68,6 @@
             </thead>
           </table>
           </div>
-      <div id="input-group contact_form p-2 m-2 ">
-        <button type="button" class="btn btn-outline-success position-relative" onclick="executeListCalendar()">Ver Lista de Calendarios</button>
-      </div>
 
       </div>
 
@@ -167,7 +167,7 @@
                 <option value=2>2 horas</option>
               </select>
             </div>
-            <div class="d-grid gap-2 col-6 mx-auto">
+            <div class="d-grid gap-2 col-8 mx-auto">
               <button type="button" class="btn btn-success" onclick="executeInsertEvent()">Insertar Evento</button>
             </div>
           </form>
