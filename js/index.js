@@ -377,7 +377,7 @@ async function executeInsertEvent() {
                     'email': emailEventInvitado,//document.getElementById('emailEventInvitado')
                     'comment': emailEventInvitado,
                     'displayName': emailEventInvitado,
-                    'responseStatus': 'accepted'
+                    'responseStatus': 'accepted' // Se indica que el invitado ha aceptado la invitacion
                 },
             ],
             'reminders': { // recordatorios
@@ -393,13 +393,13 @@ async function executeInsertEvent() {
                     }
                 ]
             },
-            'eventType': 'default',
+            'eventType': 'default', // Tipo de evento
             'summary': summaryEvent,//document.getElementById('summaryEvent'),
             'description': descriptionEvent,//document.getElementById('descriptionEvent'),
             'guestsCanInviteOthers': false, // Si un invitado puede invitar a otros al evento
             'guestsCanSeeOtherGuests': false, //Si los invitados ven a los otros invitados al evneto
             'location': locationEvent,//document.getElementById('locationEvent'),
-            'status': 'confirmed',
+            'status': 'confirmed', // Estado del evento donde se indica que esta confirmado
             // 'creator': {
             //     'email': 'jose2889@gmail',
             //     'displayName': "Creador Principal"
@@ -408,14 +408,14 @@ async function executeInsertEvent() {
                 'email': 'edgardoll4@gmail.com',
                 'displayName': 'Organizador Principal'
             },
-            'transparency': 'opaque',
-            'visibility': 'default',
+            'transparency': 'opaque', // Indica si el evento es transparente o no
+            'visibility': 'default', // Indica si el evento es publico o privado
             'conferenceData': { // Solocita la creacion de conferencia
-                'name':'Evento en Google Meet',
+                'name':'Evento en Google Meet', // Nombre de la conferencia
                 'createRequest': {
-                    'requestId': requestId,
+                    'requestId': btoa(requestId), // Id unico (puede ser cuanquiera) para solicitar la generación del link
                     // 'conferenceSolutionKey': {
-                    //     'type': 'hangoutsMeet'
+                    //     'type': 'hangoutsMeet'  // EL calendario lo tiene por defecto
                     // }
                 },
 
@@ -423,11 +423,12 @@ async function executeInsertEvent() {
             
             
         },
+        'sendNotifications': true,
         'sendUpdates': 'all',
-        'conferenceDataVersion':1 // Permite que las solicitud de conferencias para el evento
+        'conferenceDataVersion':1 // Permite que las solicitud de conferencias para el evento cuanto el valor es 1
     };
 
-    
+    // console.log(btoa(requestId));
 
     return  await gapi.client.calendar.events.insert( request )// json que se enviara a la api de google           
     
