@@ -274,12 +274,12 @@ async function executeListEvents(calendarId) { // busca todos los eventos en el 
             res.innerHTML += `
 
             <tr>
-                <td><button type="button" class="btn btn-outline-danger position-relative" onclick="executeDeleteEvent('${event.id}')">Eliminar Evento</button></td>
                 <td>${event.summary}</td>
                 <td>(${event.start.dateTime || event.start.date})</td>
                 <td>(${event.end.dateTime || event.end.date})</td>
                 <td>${event.location}</td>
                 <td><a class="btn btn-outline-primary p-2 mb-2 opacity-75" href="${hangoutLink}" target="_blank">Ir al link de la conferencia</a></td>
+                <td><button type="button" class="btn btn-outline-danger position-relative" onclick="executeDeleteEvent('${event.id}')">Eliminar Evento</button></td>
             </tr>
             
             `;
