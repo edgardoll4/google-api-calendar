@@ -456,7 +456,7 @@ async function executeInsertEvent() {
 
 // ######################Eliminar evento############################### 
 async function executeDeleteEvent() {
-    CALENDAR_ID = document.getElementById('calendarID').value;
+    // CALENDAR_ID = document.getElementById('calendarID').value;
     let control = document.getElementById('eventID').value;
     console.log(control)
     return gapi.client.calendar.events.delete({
