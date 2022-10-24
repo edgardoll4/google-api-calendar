@@ -350,7 +350,8 @@ async function executeInsertEvent() {
                     'email': emailEventInvitado, // email del invitado
                     'comment': emailEventInvitado, // comentario del invitado
                     'displayName': emailEventInvitado, // display name del invitado
-                    'responseStatus': 'accepted' // Se indica que el invitado ha aceptado la invitacion
+                    'responseStatus': 'accepted', // Se indica que el invitado ha aceptado la invitacion
+                    'organizer': true, // Se indica que el invitado es el organizador
                 },
             ],
             'reminders': { // recordatorios
