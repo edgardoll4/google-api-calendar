@@ -263,13 +263,22 @@ async function executeListEvents(calendarId) { // busca todos los eventos en el 
 
         let res = document.getElementById('contentEvents');
         let hangoutLink='';
+        let labelButton = '';
+        let disabledBtn = '';
         res.innerHTML = '';
 
         for(let event of events ){
             if(!event.hangoutLink || !event.conferenceData.createRequest || event.conferenceData.createRequest.status.statusCode!='success')
                 hangoutLink='Evento sin conferencia';
-            if (event.hangoutLink)
+            if (!event.hangoutLink){
+                hangoutLink='Evento sin conferencia';
+                labelButton = 'Sin Conferencia';
+                classBtn = 'disabled';
+            }else {
                 hangoutLink=event.hangoutLink;
+                labelButton = 'Ir a la Conferencia';
+                classBtn = '';
+            }
 
             res.innerHTML += `
 
@@ -278,7 +287,7 @@ async function executeListEvents(calendarId) { // busca todos los eventos en el 
                 <td>(${event.start.dateTime || event.start.date})</td>
                 <td>(${event.end.dateTime || event.end.date})</td>
                 <td>${event.location}</td>
-                <td><a class="btn btn-outline-primary p-2 mb-2 opacity-75" href="${hangoutLink}" target="_blank">Ir al link de la conferencia</a></td>
+                <td><a type="button" class="btn btn-outline-primary p-2 mb-2 opacity-75 ${classBtn} " href="${hangoutLink}" target="_blank">${labelButton}</a></td>
                 <td><button type="button" class="btn btn-outline-danger position-relative" onclick="executeDeleteEvent('${event.id}')">Eliminar Evento</button></td>
             </tr>
             
